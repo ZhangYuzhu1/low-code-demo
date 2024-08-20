@@ -1,0 +1,33 @@
+{
+  "name": "vue3-nestjs-template",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@8.14.1",
+  "description": "vue3+nestjs全栈模版",
+  "author": "",
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "dev:types": "pnpm --filter types dev",
+    "dev:utils": "pnpm --filter utils dev",
+    "dev:client": "pnpm --filter client dev",
+    "dev:admin": "pnpm --filter admin dev",
+    "dev:server": "pnpm --filter server dev",
+    "build:r-types": "pnpm --filter types build",
+    "build:utils": "pnpm --filter utils build",
+    "build:packages": "pnpm run build:utils && pnpm run build:types",
+    "build:client": "pnpm --filter client build",
+    "build:admin": "pnpm --filter admin build",
+    "build:server": "pnpm --filter server build"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.39.5",
+    "chalk": "^5.3.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.18.1",
+    "execa": "^7.1.1",
+    "prettier": "^3.2.5",
+    "prompts": "^2.4.2",
+    "shx": "^0.3.4"
+  }
+}
