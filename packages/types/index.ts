@@ -3,8 +3,10 @@
  */
 
 // Enums
+export * from './types/enum/error-code.enum'
 
 // Constants
 export * from './types/constant/test.constant'
 
 // Interfaces
+export * from './types/http/basic.interface'

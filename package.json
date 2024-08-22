@@ -13,7 +13,7 @@
     "dev:client": "pnpm --filter client dev",
     "dev:admin": "pnpm --filter admin dev",
     "dev:server": "pnpm --filter server dev",
-    "build:r-types": "pnpm --filter types build",
+    "build:types": "pnpm --filter types build",
     "build:utils": "pnpm --filter utils build",
     "build:packages": "pnpm run build:utils && pnpm run build:types",
     "build:client": "pnpm --filter client build",

@@ -23,7 +23,6 @@
     "@nestjs/swagger": "^7.1.2",
     "@nestjs/throttler": "^4.2.1",
     "@nestjs/typeorm": "^10.0.0",
-    "reflect-metadata": "^0.2.0",
     "bcrypt": "^5.1.1",
     "cheerio": "1.0.0-rc.12",
     "class-transformer": "^0.5.1",
@@ -35,14 +34,17 @@
     "mysql2": "^3.9.2",
     "node-rsa": "^1.1.1",
     "nodemailer": "^6.9.13",
+    "oracledb": "^6.6.0",
     "redis": "^4.6.14",
+    "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
-    "shared": "workspace:^",
     "socket.io": "^4.7.5",
     "svg-captcha": "^1.4.0",
     "swagger-ui-express": "^5.0.0",
     "ts-mixer": "^6.0.3",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "types": "workspace:^",
+    "utils": "workspace:^"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.8",
