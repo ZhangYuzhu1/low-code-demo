@@ -1,5 +1,5 @@
 ## 描述
-全栈项目模版
+Nodejs全栈项目模版
 
 前端：Vue3+Typescript+Quasar
 
