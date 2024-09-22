@@ -1,6 +1,5 @@
 import * as path from 'node:path'
 
-import * as oracledb from 'oracledb'
 import fmp from '@fastify/multipart'
 import * as dotenvFlow from 'dotenv-flow'
 import { NestFactory } from '@nestjs/core'
@@ -20,14 +19,6 @@ async function bootstrap() {
 
   // 添加环境变量
   dotenvFlow.config({ path: '../shared' })
-
-  // 初始化 Oracle InstanceClient
-  const libDir = process.env.ORACLE_INSTANCE_LIBDIR
-  if (libDir) {
-    oracledb.initOracleClient({
-      libDir,
-    })
-  }
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,

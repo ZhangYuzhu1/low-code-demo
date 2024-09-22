@@ -9,6 +9,7 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
+    "@catsjuice/utils": "^0.1.7",
     "@fastify/compress": "^6.4.0",
     "@fastify/multipart": "^7.7.3",
     "@nestjs/axios": "^3.0.2",

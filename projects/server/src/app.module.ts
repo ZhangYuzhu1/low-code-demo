@@ -1,12 +1,34 @@
-import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { join } from 'node:path'
+
+import { validatePath } from 'utils'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { ScheduleModule } from '@nestjs/schedule'
+import { ThrottlerModule } from '@nestjs/throttler'
+import { Module, RequestMethod } from '@nestjs/common'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import type { TypeOrmModuleOptions } from '@nestjs/typeorm'
+import type { MiddlewareConsumer, NestModule } from '@nestjs/common'
 
 import allConfig from './config'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
+import { IpMiddleware } from './middleware/ip.middleware'
+import { AuthMiddleware } from './middleware/auth.middleware'
+import { AccessMiddleware } from './middleware/access.middleware'
 
 @Module({
   imports: [
+    // Internal Modules
+    // LogModule,
+    // UserModule,
+    // RoleModule,
+    // CodeModule,
+    // RedisModule,
+    // EmailModule,
+
+    // 定时任务
+    ScheduleModule.forRoot(),
+    // 请求限流
+    ThrottlerModule.forRoot({ ttl: 10, limit: 30 }),
 
     // 环境配置
     ConfigModule.forRoot({
@@ -15,8 +37,43 @@ import { AppService } from './app.service'
       cache: true,
       load: [...allConfig],
     }),
+    // 数据库
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (cfgSrv: ConfigService) => cfgSrv.get<TypeOrmModuleOptions>('db'),
+    }),
+    // 静态资源服务
+    ServeStaticModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (cfgSrv: ConfigService) => [
+        {
+          rootPath: join(__dirname, 'public'),
+          serveRoot: validatePath(cfgSrv.get('app.basePath')),
+        },
+      ],
+    }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(IpMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    })
+    consumer.apply(AuthMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    })
+    consumer.apply(AccessMiddleware)
+      .exclude(
+        { path: 'log/(.*)', method: RequestMethod.ALL },
+      ).forRoutes({
+        path: '*',
+        method: RequestMethod.ALL,
+      })
+  }
+}
