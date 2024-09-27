@@ -9,7 +9,7 @@ export default defineConfig({
   base,
   lastUpdated: true,
   title: '工具函数合集',
-  description: '用于企研数据内部项目开发用的工具函数合集',
+  description: '开发用的工具函数合集',
   srcDir: 'src',
   head: [['link', { rel: 'icon', href: `${base}logo.svg` }]],
   themeConfig: {
