@@ -1,6 +1,6 @@
 import { LessThan, Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Inject, Injectable, forwardRef } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 import { Login } from 'src/entities'
 
@@ -16,7 +16,7 @@ export class AuthService {
 
     @InjectRepository(Login)
     private readonly _loginRepo: Repository<Login>,
-    @Inject(forwardRef(() => UserService))
+    // @Inject(forwardRef(() => UserService))
     private readonly _userSrv: UserService,
     // @Inject(forwardRef(() => JwtAuthService))
     private readonly _jwtAuthSrv: JwtAuthService,

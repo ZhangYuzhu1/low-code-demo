@@ -1,7 +1,7 @@
 import { ErrorCode } from 'types'
 import { objectPick } from 'utils'
 import { JwtService } from '@nestjs/jwt'
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable, forwardRef } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 
 import type { User } from 'src/entities'
@@ -14,9 +14,11 @@ import { RedisService } from '../redis/redis.service'
 export class JwtAuthService {
   constructor(
     private readonly _jwtSrv: JwtService,
-    private readonly _authSrv: AuthService,
     private readonly _cfgSrv: ConfigService,
     private readonly _redisSrv: RedisService,
+
+    @Inject(forwardRef(() => AuthService))
+    private readonly _authSrv: AuthService,
 
   ) { }
 

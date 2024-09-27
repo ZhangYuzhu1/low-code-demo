@@ -17,7 +17,7 @@ export class UserService implements OnModuleInit {
   ) { }
 
   onModuleInit() {
-    // this.initSysAdmin()
+    this.initSysAdmin()
   }
 
   /**

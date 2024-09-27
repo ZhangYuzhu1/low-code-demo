@@ -1,5 +1,5 @@
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { Module, forwardRef } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 
 import { Login } from 'src/entities/login'
 
@@ -12,10 +12,11 @@ import { AuthController } from './auth.controller'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Login]),
-    forwardRef(() => JwtAuthModule),
-    forwardRef(() => UserModule),
+    UserModule,
     CodeModule,
+    JwtAuthModule,
+    // forwardRef(() => UserModule),
+    TypeOrmModule.forFeature([Login]),
   ],
   controllers: [AuthController],
   providers: [AuthService],

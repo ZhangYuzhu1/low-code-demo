@@ -23,7 +23,7 @@ export default registerAs('db', () => {
     logger: 'file',
     logging: true,
     autoLoadEntities: true,
-    migrations: ['src/migration/*.js'],
+    // migrations: ['src/migration/*.js'],
     synchronize: parseBoolRaw(DB_ORM_ENABLE_SYNC, false),
     legacySpatialSupport: false,
   }
