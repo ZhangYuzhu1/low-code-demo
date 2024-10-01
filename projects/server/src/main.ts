@@ -56,7 +56,7 @@ async function bootstrap() {
 
   // 启动服务
   await app.listen(parseIntRaw(cfgSrv.get('SERVER_PORT'), 2148), '::')
-  logger.log(`App is running on ${await app.getUrl()}`)
+  logger.verbose(`App is running on ${await app.getUrl()}`)
 
   // 关闭应用及数据库连接
   async function close() {

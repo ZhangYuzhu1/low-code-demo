@@ -1,5 +1,11 @@
 <script setup lang="ts">
+const { updateAppHead } = useApp()
 
+onBeforeMount(() => {
+  const { VITE_APP_NAME } = import.meta.env
+
+  updateAppHead(VITE_APP_NAME)
+})
 </script>
 
 <template>
@@ -7,5 +13,3 @@
     Admin
   </div>
 </template>
-
-<style scoped></style>

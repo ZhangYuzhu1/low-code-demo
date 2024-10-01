@@ -39,6 +39,21 @@ export function responseSuccess<T>(data: T) {
 }
 
 /**
+ * Swagger Api 响应错误修饰器
+ */
+export function ApiErrorResponse(...codes: ErrorCode[]) {
+  return applyDecorators(
+    ...codes.map((code) => {
+      const { httpStatus, message } = getErrorMessage(code)
+      return ApiResponse({
+        status: httpStatus,
+        description: message,
+      })
+    }),
+  )
+}
+
+/**
  * Swagger Api 响应成功修饰器
  */
 export function ApiSuccessResponse(type: any) {

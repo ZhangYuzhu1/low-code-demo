@@ -7,6 +7,7 @@
   "dependencies": {
     "@quasar/extras": "^1.16.5",
     "@vueuse/core": "^10.2.1",
+    "@vueuse/head": "^2.0.0",
     "axios": "^1.4.0",
     "lodash": "^4.17.21",
     "quasar": "2.14.6",
