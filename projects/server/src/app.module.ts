@@ -13,17 +13,24 @@ import type { MiddlewareConsumer, NestModule } from '@nestjs/common'
 import allConfig from './config'
 import { IpMiddleware } from './middleware/ip.middleware'
 import { AuthMiddleware } from './middleware/auth.middleware'
-import { AccessMiddleware } from './middleware/access.middleware'
+import { LogModule } from './modules/log/log.module'
+import { UserModule } from './modules/user/user.module'
+import { RoleModule } from './modules/role/role.module'
+import { CodeModule } from './modules/code/code.module'
+import { RedisModule } from './modules/redis/redis.module'
+import { EmailModule } from './modules/email/email.module'
+import { AuthModule } from './modules/auth/auth.module'
 
 @Module({
   imports: [
     // Internal Modules
-    // LogModule,
-    // UserModule,
-    // RoleModule,
-    // CodeModule,
-    // RedisModule,
-    // EmailModule,
+    LogModule,
+    UserModule,
+    RoleModule,
+    CodeModule,
+    AuthModule,
+    RedisModule,
+    EmailModule,
 
     // 定时任务
     ScheduleModule.forRoot(),
@@ -68,12 +75,12 @@ export class AppModule implements NestModule {
       path: '*',
       method: RequestMethod.ALL,
     })
-    consumer.apply(AccessMiddleware)
-      .exclude(
-        { path: 'log/(.*)', method: RequestMethod.ALL },
-      ).forRoutes({
-        path: '*',
-        method: RequestMethod.ALL,
-      })
+    // consumer.apply(AccessMiddleware)
+    //   .exclude(
+    //     { path: 'log/(.*)', method: RequestMethod.ALL },
+    //   ).forRoutes({
+    //     path: '*',
+    //     method: RequestMethod.ALL,
+    //   })
   }
 }

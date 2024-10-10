@@ -15,7 +15,7 @@ export function useApp() {
         },
       ],
     })
-    useFavicon('/logo.svg')
+    useFavicon('/favicon.svg')
   }
   return {
     updateAppHead,
