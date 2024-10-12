@@ -9,7 +9,7 @@ import Layouts from 'vite-plugin-vue-layouts'
 import generateSitemap from 'vite-ssg-sitemap'
 import VueMacros from 'unplugin-vue-macros/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import VueDevTools from 'vite-plugin-vue-devtools'
+// import VueDevTools from 'vite-plugin-vue-devtools'
 import WebfontDownload from 'vite-plugin-webfont-dl'
 import Components from 'unplugin-vue-components/vite'
 
@@ -90,15 +90,13 @@ export default ({ mode }: any) => {
         dts: 'src/types/auto-imports.d.ts',
         dirs: [
           'src/api',
-          'src/composables',
+          'src/hooks',
           'src/constants',
           'src/utils/**',
           '../shared/api',
-          '../shared/composables',
+          '../shared/hooks',
           '../shared/constants',
           '../shared/utils/**',
-          '../../shared/composables',
-          '../../shared/utils/**',
         ],
         vueTemplate: true,
       }),
@@ -124,7 +122,7 @@ export default ({ mode }: any) => {
       WebfontDownload(),
 
       // https://github.com/webfansplz/vite-plugin-vue-devtools
-      VueDevTools(),
+      // VueDevTools(),
     ],
 
     // https://github.com/antfu/vite-ssg
