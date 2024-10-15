@@ -9,7 +9,5 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="">
-    Client
-  </div>
+  <RouterView />
 </template>
