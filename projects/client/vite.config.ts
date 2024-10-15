@@ -9,6 +9,7 @@ import Layouts from 'vite-plugin-vue-layouts'
 import generateSitemap from 'vite-ssg-sitemap'
 import VueMacros from 'unplugin-vue-macros/vite'
 import AutoImport from 'unplugin-auto-import/vite'
+
 // import VueDevTools from 'vite-plugin-vue-devtools'
 import WebfontDownload from 'vite-plugin-webfont-dl'
 import Components from 'unplugin-vue-components/vite'
