@@ -1,5 +1,5 @@
 import Public from './Public'
 
-export const InformationList = [
+export const PhotosList = [
   ...Public,
 ]
