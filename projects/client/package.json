@@ -24,7 +24,8 @@
     "utils": "workspace:^",
     "vue": "^3.4.21",
     "vue-countup-v3": "1.4.1",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue3-sketch-ruler": "^2.2.6"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.1",

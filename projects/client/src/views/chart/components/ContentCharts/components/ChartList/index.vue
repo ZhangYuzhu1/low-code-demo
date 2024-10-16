@@ -129,6 +129,7 @@ function handleItem(key: string) {
 .is-active {
   position: relative;
   color: var(--primary-1);
+  background-color: rgba(0,104,184,0.1);
 
   &::before {
     position: absolute;

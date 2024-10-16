@@ -13,11 +13,16 @@ defineProps({
  * @param v
  */
 function dblclickHandle(v: ConfigType) {
-  console.log(v)
+  // console.log(v)
 }
 
+/**
+ * 拖拽开始事件
+ * @param e
+ * @param val
+ */
 function dragStartHandle(e: DragEvent, val: ConfigType) {
-  console.log(e)
+  // console.log(e)
 }
 </script>
 

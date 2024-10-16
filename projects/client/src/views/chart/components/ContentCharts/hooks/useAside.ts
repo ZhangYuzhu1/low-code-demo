@@ -6,34 +6,27 @@ const packages = Object.freeze(packagesList)
 
 export interface MenuType {
   key: string
-  icon: string
   label: string
   list: ConfigType[]
 }
 
 const packagesListObj = {
   [PackagesCategoryEnum.CHARTS]: {
-    icon: 'i-mingcute:chart-line-line',
     label: PackagesCategoryName.Charts,
   },
   [PackagesCategoryEnum.INFORMATIONS]: {
-    icon: 'i-mingcute:fan-direction-front-line',
     label: PackagesCategoryName.Informations,
   },
   [PackagesCategoryEnum.TABLES]: {
-    icon: 'i-mingcute:table-3-line',
     label: PackagesCategoryName.Tables,
   },
   [PackagesCategoryEnum.DECORATES]: {
-    icon: 'i-mingcute:binance-usd-busd-line',
     label: PackagesCategoryName.Decorates,
   },
   [PackagesCategoryEnum.PHOTOS]: {
-    icon: 'i-mingcute:photo-album-line',
     label: PackagesCategoryName.Photos,
   },
   [PackagesCategoryEnum.ICONS]: {
-    icon: 'i-mingcute:incognito-mode-line',
     label: PackagesCategoryName.Icons,
   },
 }
@@ -44,8 +37,6 @@ export function useAside() {
     for (const val in packages) {
       menulist.push({
         key: val,
-        // @ts-expect-error: 类型不匹配，这是预期的
-        icon: packagesListObj[val].icon,
         // @ts-expect-error: 类型不匹配，这是预期的
         label: packagesListObj[val].label,
         // @ts-expect-error: 类型不匹配，这是预期的

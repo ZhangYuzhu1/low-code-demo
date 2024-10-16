@@ -13,8 +13,8 @@ const { chartCofExpand } = useChartConfig()
     }"
   >
     <div
-      b="1 grey-3" b-r="none" absolute-y-center left--30px
-      flex="~ center" cursor-pointer p-1
+      b="1 grey-3" b-r="none" flex="~ center"
+      absolute-y-center left--30px cursor-pointer p-1 z-9
       style="border-radius: 8px 0 0 8px;"
       @click="chartCofExpand = !chartCofExpand"
     >
