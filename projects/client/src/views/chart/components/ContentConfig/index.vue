@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import PageConfig from './components/PageConfig'
+import ComponentsConfig from './components/ComponentsConfig'
+
 import { useChartConfig } from '~/views/chart/hooks/useChartConfig'
 
-const { chartCofExpand } = useChartConfig()
+const { chartCofExpand, selectIdArr } = useChartConfig()
 </script>
 
 <template>
@@ -13,7 +16,7 @@ const { chartCofExpand } = useChartConfig()
     }"
   >
     <div
-      b="1 grey-3" b-r="none" flex="~ center"
+      b="1 grey-3" b-r="none" flex="~ center" bg-grey-1
       absolute-y-center left--30px cursor-pointer p-1 z-9
       style="border-radius: 8px 0 0 8px;"
       @click="chartCofExpand = !chartCofExpand"
@@ -21,5 +24,8 @@ const { chartCofExpand } = useChartConfig()
       <div v-if="chartCofExpand" w-5 h-5 i-mingcute:right-line />
       <div v-else w-5 h-5 i-mingcute:left-line />
     </div>
+
+    <PageConfig v-if="!selectIdArr.length" />
+    <ComponentsConfig v-else />
   </div>
 </template>

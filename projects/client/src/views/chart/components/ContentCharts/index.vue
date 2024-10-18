@@ -7,10 +7,9 @@ import ChartLayers from './components/ChartLayers'
   <div
     flex="~ gap1"
     b-r="1 grey-3"
+    select-none
   >
     <ChartList />
     <ChartLayers />
   </div>
 </template>
-
-<style scoped></style>

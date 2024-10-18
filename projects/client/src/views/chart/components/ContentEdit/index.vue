@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import SketchRuler from 'vue3-sketch-ruler'
-import 'vue3-sketch-ruler/lib/style.css'
+import Drager from 'es-drager'
+import 'es-drager/lib/style.css'
+import type { DragData } from 'es-drager'
 
-const startX = ref(0)
-const startY = ref(0)
+import { useChartConfig } from '../../hooks/useChartConfig'
 
-// 滚动条拖动的宽度
-const containerWidth = computed(() => {
-  return `${window.innerWidth * 2}px`
-})
+import { createComponent } from '~/packages'
+import { DragKeyEnum } from '~/enum/editPageEnum'
+import type { ConfigType, CreateComponentType } from '~/packages/index.d'
 
-// 滚动条拖动的高度
-const containerHeight = computed(() => {
-  return `${1080 * 2}px`
-})
+const { componentsList, selectIdArr, hoverId, editCanvasConfig } = useChartConfig()
 
-const canvasBox = computed(() => {
-  const layoutDom = document.getElementById('chart-edit-layout')
-  if (layoutDom) {
-    // 此处减去滚动条的宽度和高度
-    const scrollW = 20
-    return {
-      height: layoutDom.clientHeight - scrollW,
-      width: layoutDom.clientWidth - scrollW,
-    }
+/** 拖拽组件 */
+async function dragHandle(e: DragEvent) {
+  e.preventDefault()
+
+  try {
+    const drayDataString = e.dataTransfer?.getData(DragKeyEnum.DRAG_KEY)
+    if (!drayDataString)
+      throw new Error('图表不存在')
+
+    const dropData: ConfigType = JSON.parse(drayDataString)
+
+    const newComponent: CreateComponentType = await createComponent(dropData)
+
+    setComponentPosition(newComponent, e.offsetX - newComponent.attr.w / 2, e.offsetY - newComponent.attr.h / 2)
+
+    componentsList.value.unshift(newComponent)
+    selectIdArr.value = []
+    selectIdArr.value.push(newComponent.id)
   }
-  return {
-    width: 1920,
-    height: 1080,
+  catch (error: any) {
   }
-})
-function dragHandle(e: DragEvent) {
-  console.log(e)
 }
 
 function dragoverHandle(e: DragEvent) {
@@ -40,6 +40,64 @@ function dragoverHandle(e: DragEvent) {
 
   if (e.dataTransfer)
     e.dataTransfer.dropEffect = 'copy'
+}
+
+/** 点击选中 */
+function setSelectChart(id: string) {
+  if (selectIdArr.value.find(v => v.includes(id)))
+    return
+
+  selectIdArr.value = []
+
+  selectIdArr.value.push(id)
+}
+
+/** 鼠标移入 */
+function mouseenterHandle(e: MouseEvent, item: CreateComponentType) {
+  e.stopPropagation()
+  if (!selectIdArr.value.find(v => v.includes(item.id)))
+    hoverId.value = item.id
+}
+
+/** 鼠标移出 */
+function mouseleaveHandle(e: MouseEvent, item: CreateComponentType) {
+  e.stopPropagation()
+  hoverId.value = undefined
+}
+
+/** 鼠标按下(包含移动事件) */
+function mousedownHandle(e: MouseEvent, item: CreateComponentType) {
+  e.stopPropagation()
+
+  const { attr } = item
+
+  const startX = e.clientX
+  const startY = e.clientY
+  const initialX = attr.x
+  const initialY = attr.y
+
+  document.addEventListener('mousemove', onMouseMove)
+  document.addEventListener('mouseup', onMouseUp)
+
+  function onMouseMove(e: MouseEvent) {
+    const dx = e.clientX - startX
+    const dy = e.clientY - startY
+    attr.x = initialX + dx
+    attr.y = initialY + dy
+  }
+
+  function onMouseUp() {
+    document.removeEventListener('mousemove', onMouseMove)
+    document.removeEventListener('mouseup', onMouseUp)
+  }
+}
+
+function onChange(dragData: DragData, item: CreateComponentType) {
+}
+
+/** 右键菜单 */
+function onContextmenu(e: MouseEvent, item: CreateComponentType) {
+  console.log(e)
 }
 </script>
 
@@ -51,31 +109,92 @@ function dragoverHandle(e: DragEvent) {
     @drop="dragHandle"
     @dragover="dragoverHandle"
   >
-    <SketchRuler
-      :thick="20"
-      :scale="1"
-      :start-x="startX"
-      :start-y="startY"
-      :width="canvasBox.width"
-      :height="canvasBox.height"
-      :lines="{
-        h: [],
-        v: [],
-      }"
-    />
-    <div absolute full overflow-auto>
+    <div absolute full overflow-auto p-2>
       <div
-        absolute inset-0
-        :style="{ width: containerWidth }"
+        class="es-editor"
+        b="1 grey-3"
+        :style="{
+          width: `${editCanvasConfig.width}px`,
+          height: `${editCanvasConfig.height}px`,
+          background: editCanvasConfig.background,
+        }"
+        @click.prevent="selectIdArr = []"
+        @dragover.prevent
       >
-        123
+        {{ selectIdArr }}
+        <Drager
+          v-for="(item, index) in componentsList" :key="item.id"
+          relative cursor-move select-none :rotatable="false"
+          resizable markline
+          snap-to-grid
+          disabled-key-event
+          :border="false"
+          :grid-x="10"
+          :grid-y="10"
+          :selected="selectIdArr.includes(item.id)"
+          :top="item.attr.y"
+          :left="item.attr.x"
+          :width="item.attr.w"
+          :height="item.attr.h"
+          @focus="setSelectChart(item.id)"
+          @contextmenu.stop="onContextmenu($event, item)"
+        >
+          <div
+            absolute full :style="{
+              zIndex: index + 1,
+            }"
+          >
+            <component
+              :is="item.chartConfig.chartKey"
+              :chart-config="item"
+              full
+            />
+          </div>
+        </Drager>
       </div>
     </div>
   </div>
 </template>
 
-<style>
-.h-container {
-  width: calc(100% - 20px) !important;
+<style scoped lang="scss">
+.isActive {
+  border:1px solid var(--primary-1);
+  background: rgba(0,104,184,0.3);
+}
+.isHover {
+  border: 1px dashed var(--primary-1);
+}
+</style>
+
+<style lang="scss">
+$width-childs: 2, 6;
+$height-childs: 4, 8;
+
+.es-drager {
+  .es-drager-dot {
+    .es-drager-dot-handle {
+      background-color: var(--primary-1);
+    }
+
+    // 循环处理需要修改宽度度的元素
+    @each $i in $width-childs {
+      &:nth-child(#{$i}) {
+        .es-drager-dot-handle {
+          width: 20px;
+          border-radius: 8px;
+        }
+      }
+    }
+
+    // 循环处理需要修改高度的元素
+    @each $i in $height-childs {
+      &:nth-child(#{$i}) {
+        .es-drager-dot-handle {
+          height: 20px;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
 }
 </style>

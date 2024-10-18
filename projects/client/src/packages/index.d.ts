@@ -128,3 +128,9 @@ export interface CreateComponentType extends PublicConfigType , requestConfig {
   option: any
   groupList?: Array<CreateComponentType>
 }
+
+// 获取组件
+export enum FetchComFlagType {
+  VIEW,
+  CONFIG
+}

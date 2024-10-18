@@ -235,6 +235,9 @@ importers:
       axios:
         specifier: ^1.4.0
         version: 1.4.0
+      es-drager:
+        specifier: ^1.2.12
+        version: 1.2.12(vue@3.4.21)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6679,6 +6682,14 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       get-intrinsic: 1.2.4
+
+  /es-drager@1.2.12(vue@3.4.21):
+    resolution: {integrity: sha512-7eySLlgeKtKlede6MWDNQ+qrNGFFOIHCHq5oAWv/pkLsuC9pug9N7T4qGQUvvlq3UCOJwsNCwOlSacMcc9gzLg==}
+    peerDependencies:
+      vue: '>=3.2.0'
+    dependencies:
+      vue: 3.4.21(typescript@5.2.2)
+    dev: false
 
   /es-errors@1.3.0:
     resolution: {integrity: sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==}

@@ -8,14 +8,14 @@ const props = defineProps({
   }
 })
 
-const { w, h } = toRefs(props.chartConfig.attr)
-const { dataset, fit, borderRadius } = toRefs(props.chartConfig.option)
+const { borderRadius } = toRefs(props.chartConfig.option)
+
 
 const option = shallowReactive({
   dataset: ''
 })
 
-const getStyle = (radius: number) => {
+function getStyle(radius: number) {
   return {
     borderRadius: `${radius}px`,
     overflow: 'hidden'
@@ -35,11 +35,7 @@ watch(
 </script>
 
 <template>
-  <div :style="getStyle(borderRadius)">
-    <q-img
-      :src="option.dataset"
-      :width="w"
-      :height="h"
-    />
+  <div p-2 :style="getStyle(borderRadius)">
+    <q-img :src="option.dataset" full/>
   </div>
 </template>

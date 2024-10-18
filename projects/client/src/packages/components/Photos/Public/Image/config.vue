@@ -11,15 +11,15 @@ defineProps({
 </script>
 
 <template>
-  <div >
-    <div>属性</div>
-    <div>
-      <div>路径</div>
-      <q-input v-model="optionData.dataset"></q-input>
-    </div>
-    <div>
-      <div>圆角</div>
-      <q-input v-model.number="optionData.borderRadius" type="number"></q-input>
-    </div>
+  <div flex="~ col gap-2">
+      <q-input
+        v-model="optionData.dataset"
+        label="路径"
+      />
+      <q-input
+        v-model.number="optionData.borderRadius"
+        type="number"
+        label="圆角"
+      />
   </div>
 </template>

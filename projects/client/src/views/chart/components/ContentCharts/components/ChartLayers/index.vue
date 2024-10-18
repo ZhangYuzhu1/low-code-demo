@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useChartConfig } from '~/views/chart/hooks/useChartConfig'
 
-const { layerExpand } = useChartConfig()
+const { layerExpand, componentsList, selectIdArr } = useChartConfig()
 </script>
 
 <template>
   <div
-    flex="~ col" bg-grey-2
+    flex="~ col" bg-grey-2 truncate
     :style="{
       width: layerExpand ? '200px' : '50px',
       transition: 'width 0.3s ease-in-out',
@@ -21,7 +21,6 @@ const { layerExpand } = useChartConfig()
       <div
         v-if="layerExpand"
         flex="~ items-center"
-        truncate
       >
         <div v-text="'图层'" />
         <div w-5 h-5 i-mdi:layers-outline />
@@ -34,5 +33,23 @@ const { layerExpand } = useChartConfig()
         <div v-else w-5 h-5 i-mingcute:right-line />
       </div>
     </div>
+
+    <div v-if="layerExpand" flex="~ col gap2">
+      <div
+        v-for="v in componentsList" :key="v.id"
+        :class="selectIdArr.includes(v.id) ? 'is-active' : ''"
+        flex="~ items-center gap2" p-2 cursor-pointer
+        hover="bg-grey-3" transition-300
+      >
+        <img w-16 h-10 b-rd-1 :src="v.chartConfig.cover">
+        <div v-text="v.chartConfig.title" />
+      </div>
+    </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.is-active {
+  background: #e6f7ff;
+}
+</style>
