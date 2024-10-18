@@ -122,6 +122,8 @@ function onContextmenu(e: MouseEvent, item: CreateComponentType) {
         @dragover.prevent
       >
         {{ selectIdArr }}
+        <!-- 拖拽组件库  -->
+        <!-- https://github.com/daybrush/moveable -->
         <Drager
           v-for="(item, index) in componentsList" :key="item.id"
           relative cursor-move select-none :rotatable="false"
